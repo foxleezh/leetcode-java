@@ -1,5 +1,9 @@
+import solution.BaseQustion;
+import solution.Q1;
+
 public class Test {
     public static void main(String[] args){
-        System.out.println("hello world!");
+        BaseQustion q=new Q1();
+        q.solution();
     }
 }
