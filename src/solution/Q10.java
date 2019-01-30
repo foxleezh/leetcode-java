@@ -56,26 +56,26 @@ public class Q10 extends BaseQustion {
 
     /**
      * 解题思路：当pattern中的下一个字符不是”*”时：
-     *  1、 如果字符串当前字符和pattern中的当前字符相匹配，或者pattern字符是”.”,那么字符串指针和pattern指针都后移一个字符
-     *  2、 如果字符串当前字符和pattern中当前字符不匹配，直接返回false。
-     *
+     * 1、 如果字符串当前字符和pattern中的当前字符相匹配，或者pattern字符是”.”,那么字符串指针和pattern指针都后移一个字符
+     * 2、 如果字符串当前字符和pattern中当前字符不匹配，直接返回false。
+     * <p>
      * 当pattern中的下一个是”*”时：
      * 1、如果字符串当前字符跟pattern当前字符匹配，可以有3种匹配方式：
-     *     a、pattern指针后移2字符，相当于x*被忽略；
-     *     b、字符串指针后移1字符，pattern指针后移2字符, 相当于x*匹配一位后忽略
-     *     c、字符串指针后移1字符，pattern不变，即继续匹配字符下一位，相当于x*一直匹配到最后
+     * a、pattern指针后移2字符，相当于x*被忽略；
+     * b、字符串指针后移1字符，pattern指针后移2字符, 相当于x*匹配一位后忽略
+     * c、字符串指针后移1字符，pattern不变，即继续匹配字符下一位，相当于x*一直匹配到最后
      * 2、如果字符串当前字符跟pattern当前字符不匹配，则pattern指针后移2个字符，继续匹配。
-     *
+     * <p>
      * 其实这题的关键点在于*的处理，因为它可以匹配0到多个，那就要有N多种匹配的可能，所以用递归处理比较好
-     *
+     * <p>
      * 递归的结束点就是下标同时结束，返回true，如果字符下标先结束，返回false,如果pattern下标先结束，返回false(全匹配)，返回true(部分匹配)
      */
     public boolean isMatch0(String s, String p) {
-        if (".*".equals(p)){
+        if (".*".equals(p)) {
             return true;
         }
         // 如果字符串或者pattern是空的，那么肯定没有匹配的
-        if (s == null || p == null){
+        if (s == null || p == null) {
             return false;
         }
         int i = 0, j = 0;
@@ -83,30 +83,29 @@ public class Q10 extends BaseQustion {
     }
 
 
-
-    public boolean matchChar(String str, int i, String pattern, int j){
+    public boolean matchChar(String str, int i, String pattern, int j) {
         // 字符串和pattern同时都到末尾,完全匹配
-        if (i == str.length() && j == pattern.length()){
+        if (i == str.length() && j == pattern.length()) {
             return true;
         }
         // pattern先到末尾，这里返回false，表示全匹配
-        if (i != str.length() && j == pattern.length()){
+        if (i != str.length() && j == pattern.length()) {
             return false;
         }
         // 下一个字符是*
-        if (j + 1 < pattern.length() && pattern.charAt(j + 1) == '*'){
+        if (j + 1 < pattern.length() && pattern.charAt(j + 1) == '*') {
             //当前字符匹配，则有三种情况
             if ((i != str.length() && str.charAt(i) == pattern.charAt(j)) ||
-                    (i != str.length() && pattern.charAt(j) == '.') ){
+                    (i != str.length() && pattern.charAt(j) == '.')) {
                 return matchChar(str, i, pattern, j + 2) ||
                         matchChar(str, i + 1, pattern, j + 2) ||
                         matchChar(str, i + 1, pattern, j);
-            }else {
+            } else {
                 //当前字符不匹配，pattern下标移动2位
                 return matchChar(str, i, pattern, j + 2);
             }
-        }else if ((i!=str.length() && str.charAt(i) == pattern.charAt(j)) ||
-                (i != str.length() && pattern.charAt(j) == '.')){
+        } else if ((i != str.length() && str.charAt(i) == pattern.charAt(j)) ||
+                (i != str.length() && pattern.charAt(j) == '.')) {
             // 下一个字符不是*，当前字符匹配，两个下标同时移动两位
             return matchChar(str, i + 1, pattern, j + 1);
         }
@@ -116,22 +115,21 @@ public class Q10 extends BaseQustion {
 
     /**
      * 解题思路：这题除了用递归法，还可以用动态归划的思想来解决
-     *
+     * <p>
      * 参考 https://leetcode.com/problems/regular-expression-matching/discuss/5684/9-lines-16ms-c-dp-solutions-with-explanations
-     *
+     * <p>
      * 我们定义 dp[i][j] 二维数组，如果 s[0..i)和p[0..j) 每一位都匹配那么就完成正则匹配. 其中有任意一个不满足，则不匹配
-     *
+     * <p>
      * 思路跟之前递归一样
-     *
+     * <p>
      * 二维数组 dp[i][j] 中各项为true的条件是：
      * 1、pattern中字符为‘*’时：
-     *    a、dp[i][j] = dp[i][j - 2]   ,即‘*’匹配了0次，p直接右移两位
-     *    b、dp[i][j] = dp[i - 1][j] && (s[i - 1] == p[j - 2] || p[j - 2] == '.')  ，即‘*’匹配了1次及以上，p不动，s向右移动一位
+     * a、dp[i][j] = dp[i][j - 2]   ,即‘*’匹配了0次，p直接右移两位
+     * b、dp[i][j] = dp[i - 1][j] && (s[i - 1] == p[j - 2] || p[j - 2] == '.')  ，即‘*’匹配了1次及以上，p不动，s向右移动一位
      * 2、pattern中字符不为‘*’时：
-     *   dp[i][j] = dp[i - 1][j - 1] && (s[i - 1] == p[j - 1] || p[j - 1] == '.'); 即s和p同时向右移动一位
-     *
+     * dp[i][j] = dp[i - 1][j - 1] && (s[i - 1] == p[j - 1] || p[j - 1] == '.'); 即s和p同时向右移动一位
+     * <p>
      * 当最后dp[m][n]的值为true时(m,n为s和p的字符长度)，说明两者完全匹配
-     *
      */
     public boolean isMatch1(String s, String p) {
         int m = s.length(), n = p.length();
@@ -186,22 +184,24 @@ public class Q10 extends BaseQustion {
      * 动态归划缩减版，只用一个数组前后交替即可
      */
     public boolean isMatch3(String s, String p) {
-        boolean[] match = new boolean[s.length()+1];
-        match[s.length()] = true;
-        for(int i=p.length()-1; i>=0; i--){
-            if(p.charAt(i)=='*'){
-                for(int j=s.length()-1; j>=0; j--){
-                    match[j] = match[j]||match[j+1]&&(p.charAt(i-1)=='.'||p.charAt(i-1)==s.charAt(j));
+        int m = s.length();
+        int n = p.length();
+        boolean[] cur = new boolean[m + 1];
+        cur[m] = true;
+        for (int j = n - 1; j >= 0; j--) {
+            if (p.charAt(j) == '*') {
+                for (int i = m - 1; i >= 0; i--) {
+                    cur[i] = cur[i] || cur[i + 1] && (s.charAt(i) == p.charAt(j - 1) || p.charAt(j - 1) == '.');
                 }
-                i--;
-            }else {
-                for(int j=0; j<s.length(); j++){
-                    match[j] = match[j+1]&&(p.charAt(i)=='.'||p.charAt(i)==s.charAt(j));
+                j--;
+            } else {
+                for (int i = 0; i < m; i++) {
+                    cur[i] = cur[i + 1] && (s.charAt(i) == p.charAt(j) || p.charAt(j) == '.');
                 }
-                match[s.length()] = false;
+                cur[m] = false;
             }
         }
-        return match[0];
+        return cur[0];
     }
 
     /**
@@ -209,16 +209,16 @@ public class Q10 extends BaseQustion {
      */
     public boolean isMatch(String s, String p) {
         int m = s.length(), n = p.length();
-        boolean[] cur=new boolean[n+1];
+        boolean[] cur = new boolean[n + 1];
         for (int i = 0; i <= m; i++) {
             boolean pre = cur[0];
-            cur[0] = i==0;
+            cur[0] = i == 0;
             for (int j = 1; j <= n; j++) {
                 boolean temp = cur[j];
                 if (p.charAt(j - 1) == '*') {
-                    cur[j] = cur[j - 2] || (i>0 && cur[j] && (s.charAt(i - 1) == p.charAt(j - 2) || p.charAt(j - 2) == '.'));
+                    cur[j] = cur[j - 2] || (i > 0 && cur[j] && (s.charAt(i - 1) == p.charAt(j - 2) || p.charAt(j - 2) == '.'));
                 } else {
-                    cur[j] = i>0 && pre && (s.charAt(i - 1) == p.charAt(j - 1) || p.charAt(j - 1) == '.');
+                    cur[j] = i > 0 && pre && (s.charAt(i - 1) == p.charAt(j - 1) || p.charAt(j - 1) == '.');
                 }
                 pre = temp;
             }
