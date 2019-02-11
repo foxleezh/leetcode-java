@@ -26,27 +26,35 @@ public class Q17 extends BaseQustion{
             ,"pqrs" ,"tuv" ,"wxyz" };
 
     List<String>t=new ArrayList<>();
-    String tt="";
 
     /**
      * 解题思路：看到这题我们首先可能会想到直接遍历就行，但写的过程会发现每次遍历次数不一样，这就只能用递归了
      *
      */
-    public List<String> letterCombinations(String digits) {
+    public void letter(String digits,String tt) {
+        //当digits长度为0时，表示一次遍历结束
         if (digits.length() == 0)
         {
             if(!"".equals(tt)) {
                 t.add(tt);
             }
-            return t;
+            return;
         }
         for (int i = 0; i < Number[digits.charAt(0) - '0'].length(); i++)
         {
+            //暂时保存tt
             String ts = tt;
             tt = tt + Number[digits.charAt(0)-'0'].charAt(i);
-            letterCombinations(digits.substring(1, digits.length()));
+            letter(digits.substring(1, digits.length()),tt);
+            //恢复tt
             tt = ts;
         }
+        return;
+    }
+
+
+    public List<String> letterCombinations(String digits) {
+        letter(digits,"");
         return t;
     }
 
