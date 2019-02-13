@@ -2,7 +2,7 @@ import solution.*;
 
 public class Test {
     public static void main(String[] args){
-        BaseQustion q=new Q18();
+        BaseQustion q=new Q19();
         q.solution();
     }
 }
