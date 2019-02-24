@@ -57,6 +57,7 @@ public class Q20 extends BaseQustion {
         for (int i = 0; i < len; i++) {
             char c = s.charAt(i);
             if (c == ')') {
+                //匹配到反字符，如果栈为空，或栈顶字符与字符不匹配就不满足条件
                 if (stack.isEmpty() || stack.pop() != '(') {
                     return false;
                 }
@@ -72,6 +73,7 @@ public class Q20 extends BaseQustion {
                 stack.push(c);
             }
         }
+        //执行到最后如果栈为空，表示匹配
         return stack.isEmpty();
     }
 
