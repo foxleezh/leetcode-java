@@ -56,6 +56,6 @@ public class Q22 extends BaseQustion{
 
     @Override
     public void solution() {
-        System.out.println(generateParenthesis(3).toString());
+        System.out.println(generateParenthesis(2).toString());
     }
 }
