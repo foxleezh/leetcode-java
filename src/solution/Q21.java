@@ -13,14 +13,6 @@ package solution;
  */
 public class Q21 extends BaseQustion {
 
-    public class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-    }
 
     /**
      * 解题思路：我们可以用归并排序的思想解决，也就是说，将两个有序链表的头结点进行比较，较小的放前面，较大的放后面
@@ -50,41 +42,10 @@ public class Q21 extends BaseQustion {
         return head.next;
     }
 
-    /**
-     * 根据数组创建ListNode
-     */
-    ListNode createNode(int[] nums){
-        if(nums.length==0){
-            return null;
-        }
-        ListNode head=new ListNode(nums[0]);
-        ListNode origin=head;
-        for (int i = 1; i < nums.length; i++) {
-            ListNode next=new ListNode(nums[i]);
-            head.next=next;
-            head=next;
-        }
-        return origin;
-    }
-
-    /**
-     * 输出ListNode中的值
-     */
-    String nodeToString(ListNode node){
-        StringBuilder re=new StringBuilder();
-        while (node.next!=null){
-            re.append(node.val);
-            re.append("->");
-            node=node.next;
-        }
-        re.append(node.val);
-        return re.toString();
-    }
-
     @Override
     public void solution() {
         int[] nums1=new int[]{1,3,5};
         int[] nums2=new int[]{2,4,6};
-        System.out.println(nodeToString(mergeTwoLists(createNode(nums1),createNode(nums2))));
+        System.out.println(ListNode.nodeToString(mergeTwoLists(ListNode.createNode(nums1),ListNode.createNode(nums2))));
     }
 }

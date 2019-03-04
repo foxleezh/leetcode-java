@@ -18,15 +18,6 @@ package solution;
  */
 public class Q23 extends BaseQustion {
 
-    public class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-    }
-
     /**
      * 解题思路： 可以按照归并排序的原理，两两归并
      * 时间复杂度为mlogk,m为链表中数字的总个数，k为链表个数
@@ -72,34 +63,16 @@ public class Q23 extends BaseQustion {
         return root.next;
     }
 
-    ListNode createList(int[] nums){
-        ListNode node=new ListNode(0);
-        ListNode origin=node;
-        for (int i = 0; i < nums.length; i++) {
-            ListNode next=new ListNode(nums[i]);
-            node.next=next;
-            node=node.next;
-        }
-        return origin.next;
-    }
-
     @Override
     public void solution() {
-        ListNode node1=createList(new int[]{1,3});
-        ListNode node2=createList(new int[]{2,4,7});
-        ListNode node3=createList(new int[]{3,5,9});
+        ListNode node1=ListNode.createNode(new int[]{1,3});
+        ListNode node2=ListNode.createNode(new int[]{2,4,7});
+        ListNode node3=ListNode.createNode(new int[]{3,5,9});
         ListNode[] nodes=new ListNode[3];
         nodes[0]=node1;
         nodes[1]=node2;
         nodes[2]=node3;
         ListNode node = mergeKLists(nodes);
-        StringBuilder stringBuilder=new StringBuilder();
-        while (node.next!=null){
-            stringBuilder.append(node.val);
-            stringBuilder.append("->");
-            node=node.next;
-        }
-        stringBuilder.append(node.val);
-        System.out.println(stringBuilder.toString());
+        System.out.println(ListNode.nodeToString(node));
     }
 }

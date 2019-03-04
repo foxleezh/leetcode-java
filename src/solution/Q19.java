@@ -19,15 +19,6 @@ import java.util.ArrayList;
  */
 public class Q19 extends BaseQustion {
 
-    public class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-    }
-
     /**
      *  解题思路：这题我们可以用双指针法，先让first指针走n步，然后second指针开始走，当first走到尾部时，second指向的就是倒数第n个
      *
@@ -55,19 +46,6 @@ public class Q19 extends BaseQustion {
     @Override
     public void solution() {
         int[] nums=new int[]{1,2,3,4,5};
-        ListNode node=new ListNode(nums[0]);
-        ListNode origin=node;
-        for (int i = 1; i < nums.length; i++) {
-            node.next=new ListNode(nums[i]);
-            node=node.next;
-        }
-        ListNode res=removeNthFromEnd(origin,2);
-        ArrayList<Integer> int_res=new ArrayList<>();
-        while (res.next!=null){
-            int_res.add(res.val);
-            res=res.next;
-        }
-        int_res.add(res.val);
-        System.out.println(int_res.toString());
+        System.out.println(ListNode.nodeToString(removeNthFromEnd(ListNode.createNode(nums),2)));
     }
 }

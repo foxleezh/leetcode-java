@@ -21,14 +21,6 @@ package solution;
  */
 public class Q2 extends BaseQustion {
 
-    public class ListNode {
-        int val;
-        ListNode next;
-        ListNode(int x) {
-            val = x;
-        }
-    }
-
     /**
      * 解题思路：这题的实质就是加法，加法的话就是涉及到进位的问题，所以我们就用一个变量来保存下进位
      * <p/>
@@ -70,10 +62,7 @@ public class Q2 extends BaseQustion {
         node4.next=node5;
         node5.next=node6;
         ListNode re=addTwoNumbers(node1,node4);
-        while(re!=null){
-            System.out.println(re.val);
-            re=re.next;
-        }
+        System.out.println(ListNode.nodeToString(re));
 
     }
 }
