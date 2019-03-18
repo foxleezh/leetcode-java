@@ -69,7 +69,7 @@ public class Q28 extends BaseQustion {
      * 详细对于KMP算法的介绍请参考https://www.cnblogs.com/yjiyjige/p/3263858.html
      */
     public int strStr(String haystack, String needle) {
-        if("".equals(haystack)||"".equals(needle)){
+        if("".equals(needle)){
             return 0;
         }
         char[] t = haystack.toCharArray();
