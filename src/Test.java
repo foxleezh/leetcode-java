@@ -9,7 +9,7 @@ import java.security.cert.X509Certificate;
 
 public class Test {
     public static void main(String[] args) {
-        BaseQustion q = new Q27();
+        BaseQustion q = new Q28();
         q.solution();
     }
 }
